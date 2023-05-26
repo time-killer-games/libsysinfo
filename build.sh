@@ -1,7 +1,7 @@
 #!/bin/sh
 cd "${0%/*}"
 if [ $(uname) = "Darwin" ]; then
-  clang++ gamemaker.cpp system.cpp libGLEW.a libglfw3.a -o libsysinfo.dylib -std=c++17 -DGLEW_STATIC -I/usr/local/include `pkg-config --cflags glfw3` `pkg-config --cflags glew` -framework Cocoa -framework IOKit -framework OpenGL -lobjc -arch arm64 -arch x86_64 -shared;
+  clang++ gamemaker.cpp system.cpp libGLEW.a libglfw3.a -o libsysinfo.dylib -std=c++17 -DGLEW_STATIC -Iinclude `pkg-config --cflags glfw3` `pkg-config --cflags glew` -framework Cocoa -framework IOKit -framework OpenGL -lobjc -arch arm64 -arch x86_64 -shared;
 elif [ $(uname) = "Linux" ]; then
   clang++ gamemaker.cpp system.cpp -o libsysinfo.so -std=c++17 `pkg-config --cflags --libs glfw3` `pkg-config --cflags --libs glew` -lGL -llibsysinfo.so -shared;
 elif [ $(uname) = "FreeBSD" ]; then
