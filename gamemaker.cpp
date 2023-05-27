@@ -24,41 +24,7 @@
  
 */
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#if (defined(__APPLE__) && defined(__MACH__))
-#define GL_SILENCE_DEPRECATION
-#include <OpenGL/gl.h>
-#else
-#include <GL/gl.h>
-#endif
-#if defined(_MSC_VER)
-#if defined(_WIN32) && !defined(_WIN64)
-#pragma comment(lib, __FILE__"\\..\\lib\\x86\\glfw3.lib")
-#elif defined(_WIN32) && defined(_WIN64)
-#pragma comment(lib, __FILE__"\\..\\lib\\x64\\glfw3.lib")
-#endif
-#if defined(_WIN32)
-#pragma comment(lib, "opengl32.lib")
-#endif
-#endif
-
 #include "system.hpp"
-
-static GLFWwindow *window = nullptr;
-static void create_opengl_context() {
-  if (!window) {
-    glewExperimental = true;
-    if (!glfwInit()) return;
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 1);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-    glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
-    window = glfwCreateWindow(1, 1, "", nullptr, nullptr);
-    if (!window) return;
-    glfwMakeContextCurrent(window);
-    if (glewInit() != GLEW_OK) return;
-  }
-}
 
 #ifdef _WIN32
 #define EXPORTED_FUNCTION extern "C" __declspec(dllexport)
@@ -130,14 +96,12 @@ EXPORTED_FUNCTION double memory_usedvmem() {
   
 EXPORTED_FUNCTION const char *gpu_vendor() {
   static std::string res;
-  create_opengl_context();
   res = ngs::sys::gpu_vendor();
   return res.c_str();
 }
 
 EXPORTED_FUNCTION const char *gpu_renderer() {
   static std::string res;
-  create_opengl_context();
   res = ngs::sys::gpu_renderer();
   return res.c_str();
 }
