@@ -538,7 +538,17 @@ std::string cpu_vendor() {
   memcpy(vendor + 4, &regs[3], 4);
   memcpy(vendor + 8, &regs[2], 4);
   vendor[12] = '\0';
-  return std::string(vendor);
+  return vendor;
+  #elif (defined(__APPLE__) && defined(__MACH__))
+  char buf[1024];
+  const char *result = nullptr;
+  std::size_t len = sizeof(buf);
+  if (!sysctlbyname("machdep.cpu.vendor", &buf, &len, nullptr, 0)) {
+    result = buf;
+  }
+  std::string str;
+  str = result ? result : "";
+  return str;
   #else
   int regs[4] { 0, 0, 0, 0 };
   __asm__("mov $0x0, %eax\n\t");
@@ -568,6 +578,25 @@ std::string cpu_brand() {
       memcpy(CPUBrandString + 32, CPUInfo, sizeof(CPUInfo));
     }
   }
+  std::string untrimmed;
+  result = CPUBrandString;
+  untrimmed = result ? result : "";
+  std::size_t pos = untrimmed.find_first_not_of(" ");
+  if (pos != std::string::npos) {
+    std::string str;
+    str = untrimmed.substr(pos);
+    return str;
+  }
+  return "";
+  #elif (defined(__APPLE__) && defined(__MACH__))
+  const char *result = nullptr;
+  char buf[1024];
+  std::size_t len = sizeof(buf);
+  if (!sysctlbyname("machdep.cpu.brand_string", &buf, &len, nullptr, 0)) {
+    result = buf;
+  }
+  std::string str;
+  str = result ? result : "";
   std::string untrimmed;
   result = CPUBrandString;
   untrimmed = result ? result : "";
