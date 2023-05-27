@@ -24,7 +24,6 @@
  
 */
 
-#include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #if (defined(__APPLE__) && defined(__MACH__))
