@@ -272,7 +272,7 @@ long long memory_totalram() {
   int mib[2];
   long long physical_memory = 0;
   mib[0] = CTL_HW;
-  #if ((defined(__APPLE ) && defined__MACH__) || defined(__FreeBSD__) || defined(__DragonFly__))
+  #if ((defined(__APPLE__) && defined(__MACH__)) || defined(__FreeBSD__) || defined(__DragonFly__))
   mib[1] = HW_PHYSMEM;
   #else
   mib[1] = HW_PHYSMEM64;
@@ -304,7 +304,7 @@ long long memory_availram() {
   int mib[2];
   long long user_memory = 0;
   mib[0] = CTL_HW;
-  #if ((defined(__APPLE ) && defined__MACH__) || defined(__FreeBSD__) || defined(__DragonFly__))
+  #if ((defined(__APPLE__) && defined(__MACH__)) || defined(__FreeBSD__) || defined(__DragonFly__))
   mib[1] = HW_USERMEM;
   #else
   mib[1] = HW_USERMEM64;
@@ -595,10 +595,8 @@ std::string cpu_brand() {
   if (!sysctlbyname("machdep.cpu.brand_string", &buf, &len, nullptr, 0)) {
     result = buf;
   }
-  std::string str;
-  str = result ? result : "";
   std::string untrimmed;
-  result = CPUBrandString;
+  result = result ? result : "";
   untrimmed = result ? result : "";
   std::size_t pos = untrimmed.find_first_not_of(" ");
   if (pos != std::string::npos) {
