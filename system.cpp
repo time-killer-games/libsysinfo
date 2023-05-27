@@ -50,8 +50,9 @@
 #else
 #include <GL/gl.h>
 #endif
-#if ((defined(__APPLE__) && defined(__MACH__)) || defined(__linux__) || defined(__FreeBSD__) || defined(__DragonFly__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__sun))
+#if (!defined(__APPLE__) && !defined(__MACH__))
 #include <cpuid.h>
+#endif
 #if ((defined(__APPLE__) && defined(__MACH__)) || defined(__FreeBSD__) || defined(__DragonFly__) || defined(__NetBSD__) || defined(__OpenBSD__))
 #include <sys/types.h>
 #if (defined(__FreeBSD__) || defined(__DragonFly__))
@@ -60,7 +61,6 @@
 #include <kvm.h>
 #endif
 #include <sys/sysctl.h>
-#endif
 #endif
 #include <sys/utsname.h>
 #endif
