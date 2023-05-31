@@ -15,5 +15,5 @@ elif [ $(uname) = "OpenBSD" ]; then
 elif [ $(uname) = "SunOS" ]; then
   clang++ gamemaker.cpp system.cpp -o libsysinfo.so -std=c++17 -DCREATE_OPENGL_CONTEXT `pkg-config --cflags --libs glfw3` `pkg-config --cflags --libs glew` -lGL -fPIC -shared;
 else
-  g++ gamemaker.cpp system.cpp -o libsysinfo.dll -std=c++17 -DCREATE_OPENGL_CONTEXT -DGLEW_STATIC -static-libgcc -static-libstdc++ -static -lws2_32 -lglfw3 -lglew32 -lopengl32 -lgdi32 -ld3d11 -ldxgi -fPIC -shared;
+  g++ gamemaker.cpp system.cpp -o libsysinfo.dll -std=c++17 -DCREATE_OPENGL_CONTEXT -DGLEW_STATIC -static-libgcc -static-libstdc++ -static -lws2_32 -ldxgi -fPIC -shared;
 fi
