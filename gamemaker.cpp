@@ -70,6 +70,12 @@ EXPORTED_FUNCTION const char *utsname_machine() {
   return res.c_str();
 }
 
+EXPORTED_FUNCTION const char *utsname_codename() {
+  static std::string res;
+  res = ngs::sys::utsname_codename();
+  return res.c_str();
+}
+
 EXPORTED_FUNCTION double memory_totalram() {
   return (double)ngs::sys::memory_totalram(); 
 }
