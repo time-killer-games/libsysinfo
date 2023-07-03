@@ -129,7 +129,7 @@ EXPORTED_FUNCTION const char *cpu_brand() {
 }
 
 EXPORTED_FUNCTION double cpu_numcores() {
-  return ngs::sys::cpu_numcpus();
+  return ngs::sys::cpu_numcores();
 }
 
 EXPORTED_FUNCTION double cpu_numcpus() {
