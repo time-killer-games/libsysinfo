@@ -550,6 +550,7 @@ long long memory_totalvmem() {
   getbsize(&header_len, &block_s);
   int nswap = swapctl(SWAP_NSWAP, nullptr, 0);
   if (!nswap) return 0;
+    if (nswap > 0) {
       if (swapctl(SWAP_STATS, swaps, nswap) > 0) {
         for (int i = 0; i < nswap; i++) {
           total += ((swaps[i].se_nblks / (1024 / block_s)) * 1024);
