@@ -18,5 +18,5 @@ elif [ $(uname) = "OpenBSD" ]; then
 elif [ $(uname) = "SunOS" ]; then
   export PKG_CONFIG_PATH=/usr/lib/64/pkgconfig && g++ gamemaker.cpp system.cpp -o libsysinfo.so -std=c++17 -DCREATE_CONTEXT -static-libgcc `pkg-config --cflags --libs sdl2` -lGL -fPIC -shared;
 else
-  g++ gamemaker.cpp system.cpp -o libsysinfo.dll -std=c++17 -DCREATE_CONTEXT -Iinclude -static-libgcc -static-libstdc++ -static `pkg-config --cflags --libs --static sdl2` -lws2_32 -ldxgi -lopengl32 -static -fPIC -shared;
+  g++ gamemaker.cpp system.cpp -o libsysinfo.dll -std=c++17 -DCREATE_CONTEXT -static-libgcc -static-libstdc++ -static `pkg-config --cflags --libs --static sdl2` -lws2_32 -ldxgi -lopengl32 -static -fPIC -shared;
 fi
