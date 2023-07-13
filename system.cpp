@@ -84,7 +84,6 @@ namespace ngs::sys {
 
 #if defined(CREATE_CONTEXT)
 static SDL_Window *window = nullptr;
-static SDL_GLContext context = nullptr;
 static bool create_context() {
   if (!window) {
     #if (defined(__linux__) || defined(__FreeBSD__) || defined(__DragonFly__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__sun))
@@ -102,7 +101,8 @@ static bool create_context() {
     #endif
     window = SDL_CreateWindow("", 0, 0, 1, 1, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
     if (!window) return false;
-    context = SDL_GL_CreateContext(window);
+    SDL_GLContext context = SDL_GL_GetCurrentContext();
+    if (!context) context = SDL_GL_CreateContext(window);
     if (!context) return false;
     int err = SDL_GL_MakeCurrent(window, context);
     if (err) return false;
@@ -859,12 +859,6 @@ std::string gpu_vendor() {
     str = str.substr(openp + 1);
   }
   #endif
-  #if defined(CREATE_CONTEXT)
-  if (context) SDL_GL_DeleteContext(context);
-  if (window) SDL_DestroyWindow(window);
-  glClearColor(0, 0, 0, 1);
-  glClear(GL_COLOR_BUFFER_BIT);
-  #endif
   gpuvendor = str;
   return str;
 }
@@ -897,12 +891,6 @@ std::string gpu_renderer() {
       }
     }
   }
-  #endif
-  #if defined(CREATE_CONTEXT)
-  if (context) SDL_GL_DeleteContext(context);
-  if (window) SDL_DestroyWindow(window);
-  glClearColor(0, 0, 0, 1);
-  glClear(GL_COLOR_BUFFER_BIT);
   #endif
   gpurenderer = str;
   return str;
