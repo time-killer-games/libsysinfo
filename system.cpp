@@ -104,8 +104,6 @@ static bool create_context() {
     if (!window) return false;
     context = SDL_GL_CreateContext(window);
     if (!context) return false;
-    int err = SDL_GL_MakeCurrent(window, context);
-    if (err) return false;
   }
   return true;
 }
