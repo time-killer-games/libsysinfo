@@ -85,13 +85,13 @@ namespace ngs::sys {
 #if defined(CREATE_CONTEXT)
 static SDL_Window *window = nullptr;
 static SDL_GLContext original_context = nullptr;
-static void create_context() {
+static bool create_context() {
   if (!window) {
     #if (defined(__linux__) || defined(__FreeBSD__) || defined(__DragonFly__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__sun))
     setenv("SDL_VIDEODRIVER", "x11", 1);
     SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
     #endif
-    if (SDL_Init(SDL_INIT_VIDEO)) return;
+    if (SDL_Init(SDL_INIT_VIDEO)) return false;
     #if (defined(__APPLE__) && defined(__MACH__))
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
@@ -101,11 +101,13 @@ static void create_context() {
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     #endif
     window = SDL_CreateWindow("", 0, 0, 1, 1, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
-    if (!window) return;
+    if (!window) return false;
     SDL_GLContext context = SDL_GL_CreateContext(window);
-    if (!context) return;
+    if (!context) return false;
     int err = SDL_GL_MakeCurrent(window, context);
+    if (err) return false;
   }
+  return true;
 }
 #endif
 
@@ -844,7 +846,7 @@ static std::string gpuvendor;
 std::string gpu_vendor() {
   if (!gpuvendor.empty()) return gpuvendor;
   #if defined(CREATE_CONTEXT)
-  std::thread thread(create_context);
+  std::thread(create_context);
   #endif
   const char *result = (char *)glGetString(GL_VENDOR);
   std::string str;
@@ -865,7 +867,7 @@ static std::string gpurenderer;
 std::string gpu_renderer() {
   if (!gpurenderer.empty()) return gpurenderer;
   #if defined(CREATE_CONTEXT)
-  std::thread thread(create_context);
+  std::thread(create_context);
   #endif
   const char *result = (char *)glGetString(GL_RENDERER);
   std::string str;
