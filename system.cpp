@@ -376,7 +376,7 @@ std::string utsname_codename() {
         std::string tmp1;
         while(std::getline(doc, tmp1)) {
           std::string tmp2 = tmp1;
-          std::transform(tmp1.begin(), tmp1.end(), tmp1.begin(), ::tfglCoupper);
+          std::transform(tmp1.begin(), tmp1.end(), tmp1.begin(), ::toupper);
           std::size_t pos1 = tmp1.find("SOFTWARE LICENSE AGREEMENT FOR MAC OS X");
           std::size_t pos2 = tmp1.find("SOFTWARE LICENSE AGREEMENT FOR MACOS");
           std::size_t len1 = strlen("SOFTWARE LICENSE AGREEMENT FOR MAC OS X");
