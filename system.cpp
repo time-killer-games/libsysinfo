@@ -86,6 +86,7 @@ namespace ngs::sys {
 static SDL_Window *window = nullptr;
 static bool create_context() {
   if (!window) {
+    SDL_GLContext context = nullptr;
     #if (defined(__linux__) || defined(__FreeBSD__) || defined(__DragonFly__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__sun))
     setenv("SDL_VIDEODRIVER", "x11", 1);
     SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
@@ -98,12 +99,12 @@ static bool create_context() {
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-    EGLContext eglctx = eglGetCurrentContext();
-    if (eglctx != EGL_NO_CONTEXT) return true;
+    context = SDL_GL_GetCurrentContext();
+    if (context) return true;
     #endif
     window = SDL_CreateWindow("", 0, 0, 1, 1, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
     if (!window) return false;
-    SDL_GLContext context = SDL_GL_CreateContext(window);
+    context = SDL_GL_CreateContext(window);
     if (!context) return false;
     int err = SDL_GL_MakeCurrent(window, context);
     if (err) return false;
