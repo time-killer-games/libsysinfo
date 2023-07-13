@@ -99,11 +99,14 @@ static bool create_context() {
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     #endif
+    SDL_GLContext previous = SDL_GL_GetCurrentContext();
     window = SDL_CreateWindow("", 0, 0, 1, 1, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
     if (!window) return false;
     SDL_GLContext context = SDL_GL_CreateContext(window);
     if (!context) return false;
     int err = SDL_GL_MakeCurrent(window, context);
+    if (err) return false;
+    int err = SDL_GL_MakeCurrent(window, previous);
     if (err) return false;
     SDL_GL_DeleteContext(context);
   }
