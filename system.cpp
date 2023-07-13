@@ -84,7 +84,7 @@ namespace ngs::sys {
 
 #if defined(CREATE_CONTEXT)
 static SDL_Window *window = nullptr;
-static SDL_GLContext original_context = nullptr;
+static SDL_GLContext context = nullptr;
 static bool create_context() {
   if (!window) {
     #if (defined(__linux__) || defined(__FreeBSD__) || defined(__DragonFly__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__sun))
@@ -102,7 +102,7 @@ static bool create_context() {
     #endif
     window = SDL_CreateWindow("", 0, 0, 1, 1, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
     if (!window) return false;
-    SDL_GLContext context = SDL_GL_CreateContext(window);
+    context = SDL_GL_CreateContext(window);
     if (!context) return false;
     int err = SDL_GL_MakeCurrent(window, context);
     if (err) return false;
@@ -846,7 +846,7 @@ static std::string gpuvendor;
 std::string gpu_vendor() {
   if (!gpuvendor.empty()) return gpuvendor;
   #if defined(CREATE_CONTEXT)
-  std::thread(create_context);
+  if (!create_context()) return "";
   #endif
   const char *result = (char *)glGetString(GL_VENDOR);
   std::string str;
@@ -859,6 +859,12 @@ std::string gpu_vendor() {
     str = str.substr(openp + 1);
   }
   #endif
+  #if defined(CREATE_CONTEXT)
+  if (context) SDL_GL_DeleteContext(context);
+  if (window) SDL_DestroyWindow(window);
+  glClearColor(0, 0, 0, 1);
+  glClear(GL_COLOR_BUFFER_BIT);
+  #endif
   gpuvendor = str;
   return str;
 }
@@ -867,7 +873,7 @@ static std::string gpurenderer;
 std::string gpu_renderer() {
   if (!gpurenderer.empty()) return gpurenderer;
   #if defined(CREATE_CONTEXT)
-  std::thread(create_context);
+  if (!create_context()) return "";
   #endif
   const char *result = (char *)glGetString(GL_RENDERER);
   std::string str;
@@ -891,6 +897,12 @@ std::string gpu_renderer() {
       }
     }
   }
+  #endif
+  #if defined(CREATE_CONTEXT)
+  if (context) SDL_GL_DeleteContext(context);
+  if (window) SDL_DestroyWindow(window);
+  glClearColor(0, 0, 0, 1);
+  glClear(GL_COLOR_BUFFER_BIT);
   #endif
   gpurenderer = str;
   return str;
