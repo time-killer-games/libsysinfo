@@ -84,13 +84,6 @@ namespace ngs::sys {
 
 #if defined(CREATE_CONTEXT)
 static SDL_Window *window = nullptr;
-
-static void create_context_thread() {
-  SDL_GLContext context = SDL_GL_CreateContext(window);
-  if (!context) return;
-  int err = SDL_GL_MakeCurrent(window, context);
-}
-
 static bool create_context() {
   if (!window) {
     #if (defined(__linux__) || defined(__FreeBSD__) || defined(__DragonFly__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__sun))
@@ -106,9 +99,12 @@ static bool create_context() {
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     #endif
-    window = SDL_CreateWindow("", 0, 0, 1, 1, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
+    /*window = SDL_CreateWindow("", 0, 0, 1, 1, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
     if (!window) return false;
-    std::thread thread(create_context_thread);
+    SDL_GLContext context = SDL_GL_CreateContext(window);
+    if (!context) return false;
+    int err = SDL_GL_MakeCurrent(window, context);
+    if (err) return false;*/
   }
   return true;
 }
