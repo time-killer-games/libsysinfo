@@ -1117,7 +1117,6 @@ int cpu_numcores() {
   cwstr_command.resize(wstr_command.length() + 1, '\0');
   wcsncpy_s(&cwstr_command[0], wstr_command.length() + 1, wstr_command.c_str(), wstr_command.length() + 1);
   BOOL success = CreateProcessW(nullptr, &cwstr_command[0], nullptr, nullptr, true, CREATE_NO_WINDOW, nullptr, nullptr, &si, &pi);
-  delete[] cwstr_command;
   if (success) {
     DWORD nRead = 0;
     char buffer[BUFSIZ];
