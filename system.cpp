@@ -862,6 +862,8 @@ std::string gpu_vendor() {
   #if defined(CREATE_CONTEXT)
   if (context) SDL_GL_DeleteContext(context);
   if (window) SDL_DestroyWindow(window);
+  glClearColor(0, 0, 0, 1);
+  glClear(GL_COLOR_BUFFER_BIT);
   #endif
   gpuvendor = str;
   return str;
