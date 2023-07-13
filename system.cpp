@@ -844,7 +844,7 @@ static std::string gpuvendor;
 std::string gpu_vendor() {
   if (!gpuvendor.empty()) return gpuvendor;
   #if defined(CREATE_CONTEXT)
-  std::thread(create_context);
+  std::thread thread(create_context);
   #endif
   const char *result = (char *)glGetString(GL_VENDOR);
   std::string str;
@@ -865,7 +865,7 @@ static std::string gpurenderer;
 std::string gpu_renderer() {
   if (!gpurenderer.empty()) return gpurenderer;
   #if defined(CREATE_CONTEXT)
-  std::thread(create_context);
+  std::thread thread(create_context);
   #endif
   const char *result = (char *)glGetString(GL_RENDERER);
   std::string str;
