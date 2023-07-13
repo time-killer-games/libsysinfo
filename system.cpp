@@ -861,8 +861,9 @@ std::string gpu_vendor() {
   }
   #endif
   #if defined(CREATE_CONTEXT)
-  int err = SDL_GL_MakeCurrent(window, context);
+  int err = SDL_GL_MakeCurrent(nullptr, nullptr);
   if (err) return "";
+  SDL_DestroyWindow(window);
   SDL_GL_DeleteContext(context);
   #endif
   gpuvendor = str;
@@ -899,8 +900,9 @@ std::string gpu_renderer() {
   }
   #endif
   #if defined(CREATE_CONTEXT)
-  int err = SDL_GL_MakeCurrent(window, context);
+  int err = SDL_GL_MakeCurrent(nullptr, nullptr);
   if (err) return "";
+  SDL_DestroyWindow(window);
   SDL_GL_DeleteContext(context);
   #endif
   gpurenderer = str;
