@@ -6,3 +6,7 @@ the crust is elusive when it cast forth to the child-like man
 ![macos.png](https://github.com/time-killer-games/libsysinfo/blob/main/macos.png?raw=true)
 
 ![linux.png](https://github.com/time-killer-games/libsysinfo/blob/main/linux.png?raw=true)
+
+![freebsd.png](https://github.com/time-killer-games/libsysinfo/blob/main/freebsd.png?raw=true)
+
+![openbsd.png](https://github.com/time-killer-games/libsysinfo/blob/main/openbsd.png?raw=true)
