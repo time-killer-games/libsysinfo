@@ -106,7 +106,7 @@ EXPORTED_FUNCTION const char *memory_usedswap(double hr) {
 
 EXPORTED_FUNCTION const char *memory_totalvram(double hr) {
   static std::string res;
-  res = ngs::sys::memory_totalvram();
+  res = ngs::sys::memory_totalvram((bool)hr);
   return res.c_str();
 }
   
