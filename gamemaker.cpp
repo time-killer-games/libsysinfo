@@ -32,77 +32,87 @@
 #define EXPORTED_FUNCTION extern "C" __attribute__((visibility("default")))
 #endif
 
-namespace enigma_user {
-
-EXPORTED_FUNCTION const char *human_readable(double nbytes) {
+EXPORTED_FUNCTION const char *os_kernel_name() {
   static std::string res;
-  res = ngs::sys::human_readable((double)nbytes);
+  res = ngs::sys::os_kernel_name();
   return res.c_str();
 }
 
-EXPORTED_FUNCTION const char *utsname_sysname() {
+EXPORTED_FUNCTION const char *os_device_name() {
   static std::string res;
-  res = ngs::sys::utsname_sysname();
+  res = ngs::sys::os_device_name();
   return res.c_str();
 }
 
-EXPORTED_FUNCTION const char *utsname_nodename() {
+EXPORTED_FUNCTION const char *os_kernel_release() {
   static std::string res;
-  res = ngs::sys::utsname_nodename();
+  res = ngs::sys::os_kernel_release();
   return res.c_str();
 }
 
-EXPORTED_FUNCTION const char *utsname_release() {
+EXPORTED_FUNCTION const char *os_product_name() {
   static std::string res;
-  res = ngs::sys::utsname_release();
+  res = ngs::sys::os_product_name();
   return res.c_str();
 }
 
-EXPORTED_FUNCTION const char *utsname_version() {
+EXPORTED_FUNCTION const char *os_kernel_version() {
   static std::string res;
-  res = ngs::sys::utsname_version();
+  res = ngs::sys::os_kernel_version();
   return res.c_str();
 }
 
-EXPORTED_FUNCTION const char *utsname_machine() {
+EXPORTED_FUNCTION const char *os_architecture() {
   static std::string res;
-  res = ngs::sys::utsname_machine();
+  res = ngs::sys::os_architecture();
   return res.c_str();
 }
 
-EXPORTED_FUNCTION const char *utsname_codename() {
+EXPORTED_FUNCTION const char *memory_totalram(double hr) {
   static std::string res;
-  res = ngs::sys::utsname_codename();
+  res = ngs::sys::memory_totalram((bool)hr);
   return res.c_str();
 }
 
-EXPORTED_FUNCTION double memory_totalram() {
-  return (double)ngs::sys::memory_totalram(); 
+EXPORTED_FUNCTION const char *memory_freeram(double hr) {
+  static std::string res;
+  res = ngs::sys::memory_freeram((bool)hr); 
+  return res.c_str();
 }
 
-EXPORTED_FUNCTION double memory_availram() {
-  return (double)ngs::sys::memory_availram(); 
+EXPORTED_FUNCTION const char *memory_usedram(double hr) {
+  static std::string res;
+  res = ngs::sys::memory_usedram((bool)hr);
+  return res.c_str();
 }
 
-EXPORTED_FUNCTION double memory_usedram() {
-  return (double)ngs::sys::memory_usedram(); 
+EXPORTED_FUNCTION const char *memory_totalswap(double hr) {
+  static std::string res;
+  res = ngs::sys::memory_totalswap((bool)hr);
+  return res.c_str();
 }
 
-EXPORTED_FUNCTION double memory_totalvmem() {
-  return (double)ngs::sys::memory_totalvmem(); 
+EXPORTED_FUNCTION const char *memory_freeswap(double hr) {
+  static std::string res;
+  res = ngs::sys::memory_freeswap((bool)hr);
+  return res.c_str();
 }
 
-EXPORTED_FUNCTION double memory_availvmem() {
-  return (double)ngs::sys::memory_availvmem(); 
+EXPORTED_FUNCTION const char *memory_usedswap(double hr) {
+  static std::string res;
+  res = ngs::sys::memory_usedswap((bool)hr);
+  return res.c_str();
 }
 
-EXPORTED_FUNCTION double memory_usedvmem() {
-  return (double)ngs::sys::memory_usedvmem(); 
+EXPORTED_FUNCTION const char *memory_totalvram(double hr) {
+  static std::string res;
+  res = ngs::sys::memory_totalvram();
+  return res.c_str();
 }
   
-EXPORTED_FUNCTION const char *gpu_vendor() {
+EXPORTED_FUNCTION const char *gpu_manufacturer() {
   static std::string res;
-  res = ngs::sys::gpu_vendor();
+  res = ngs::sys::gpu_manufacturer();
   return res.c_str();
 }
 
@@ -112,28 +122,27 @@ EXPORTED_FUNCTION const char *gpu_renderer() {
   return res.c_str();
 }
 
-EXPORTED_FUNCTION double gpu_videomemory() {
-  return (double)ngs::sys::gpu_videomemory();
-}
-
 EXPORTED_FUNCTION const char *cpu_vendor() {
   static std::string res;
   res = ngs::sys::cpu_vendor();
   return res.c_str();
 }
 
-EXPORTED_FUNCTION const char *cpu_brand() {
+EXPORTED_FUNCTION const char *cpu_processor() {
   static std::string res;
-  res = ngs::sys::cpu_brand();
+  res = ngs::sys::cpu_processor();
   return res.c_str();
 }
 
-EXPORTED_FUNCTION double cpu_numcores() {
-  return ngs::sys::cpu_numcores();
+EXPORTED_FUNCTION const char *cpu_processor_count() {
+  static std::string res;
+  res = ngs::sys::cpu_processor_count();
+  return res.c_str();
 }
 
-EXPORTED_FUNCTION double cpu_numcpus() {
-  return ngs::sys::cpu_numcpus();
+EXPORTED_FUNCTION const char *cpu_core_count() {
+  static std::string res;
+  res = ngs::sys::cpu_core_count();
+  return res.c_str();
 }
 
-} // namespace enigma_user
