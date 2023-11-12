@@ -68,6 +68,12 @@ EXPORTED_FUNCTION const char *os_architecture() {
   return res.c_str();
 }
 
+EXPORTED_FUNCTION const char *os_is_virtual() {
+  static std::string res;
+  res = ngs::sys::os_is_virtual();
+  return res.c_str();
+}
+
 EXPORTED_FUNCTION const char *memory_totalram(double hr) {
   static std::string res;
   res = ngs::sys::memory_totalram((bool)hr);
